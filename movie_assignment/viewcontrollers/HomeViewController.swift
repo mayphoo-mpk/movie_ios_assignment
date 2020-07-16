@@ -99,6 +99,8 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
     }
@@ -138,5 +140,8 @@ extension HomeViewController : UICollectionViewDelegate, UICollectionViewDataSou
         default:
             return UICollectionViewCell()
         }
+        
     }
+    
+    
 }
