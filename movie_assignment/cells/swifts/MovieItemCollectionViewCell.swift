@@ -10,7 +10,7 @@ import UIKit
 
 class MovieItemCollectionViewCell: UICollectionViewCell {
 
-    static let identifier = "MovieCollectionViewCell"
+    static let identifier = "MovieItemCollectionViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()

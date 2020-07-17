@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="250" id="KGk-i7-Jjw" customClass="CategoryTableViewCell" customModule="movie_assignment" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="250"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="250"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtB-ie-9tR">
+                        <rect key="frame" x="16" y="16" width="404" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="R0n-ML-MEL">
+                        <rect key="frame" x="0.0" y="44.5" width="436" height="205.5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yBD-4C-HNb">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="R0n-ML-MEL" secondAttribute="trailing" id="IJn-uG-OCQ"/>
+                    <constraint firstItem="R0n-ML-MEL" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="QUe-9y-bZr"/>
+                    <constraint firstItem="R0n-ML-MEL" firstAttribute="top" secondItem="HtB-ie-9tR" secondAttribute="bottom" constant="8" id="TDU-dh-cd4"/>
+                    <constraint firstItem="R0n-ML-MEL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TII-on-ycl"/>
+                    <constraint firstAttribute="trailing" secondItem="HtB-ie-9tR" secondAttribute="trailing" constant="16" id="TsK-77-J8H"/>
+                    <constraint firstAttribute="bottom" secondItem="R0n-ML-MEL" secondAttribute="bottom" id="Uoh-qb-Iaz"/>
+                    <constraint firstItem="HtB-ie-9tR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="c5e-og-roO"/>
+                    <constraint firstItem="HtB-ie-9tR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="juX-6G-HO5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="collectionMovieItem" destination="R0n-ML-MEL" id="wh0-I3-LVK"/>
+                <outlet property="labelTitle" destination="HtB-ie-9tR" id="3wk-e5-ueN"/>
+            </connections>
+            <point key="canvasLocation" x="221.73913043478262" y="221.65178571428569"/>
+        </tableViewCell>
+    </objects>
+</document>

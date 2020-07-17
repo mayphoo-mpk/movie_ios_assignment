@@ -18,8 +18,8 @@ enum HomeSection : Int {
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var collectionViewHome: UICollectionView!
-    
+    @IBOutlet weak var categoryTableView: UITableView!
+
     var items : [HomeSection] = [
         HomeSection.Trending,
         HomeSection.NowPlaying,
@@ -35,112 +35,122 @@ class HomeViewController: UIViewController {
     
     private func initView() {
         
-        collectionViewHome.register(UINib(nibName: MovieCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+        categoryTableView.delegate = self
+        categoryTableView.dataSource = self
+        categoryTableView.separatorStyle = .none
     
-        collectionViewHome.register(UINib(nibName: TitleCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: TitleCollectionReusableView.identifier, withReuseIdentifier: TitleCollectionReusableView.identifier)
+//        categoryTableView.register(UINib(nibName: CategoryTitleHeaderView.identifier, bundle: nil), forHeaderFooterViewReuseIdentifier: CategoryTitleHeaderView.identifier)
         
+        categoryTableView.register(UINib(nibName: CategoryTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CategoryTableViewCell.identifier)
     
-        collectionViewHome.delegate = self
-        collectionViewHome.dataSource = self
-        collectionViewHome.setCollectionViewLayout(generateCompositionalLayout(), animated: true)
-    
-    }
-    
-    func generateCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout {
-            (sectionIndex : Int, layoutEnv :
-            NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            let type = self.items[sectionIndex]
-            
-            switch type {
-            case .NowPlaying:
-                return self.sectionLayoutForMovieView()
-            case .TopRated:
-                return self.sectionLayoutForMovieView()
-            case .Trending:
-                return self.sectionLayoutForMovieView()
-            case .Upcoming:
-                return self.sectionLayoutForMovieView()
-            default:
-                fatalError("Crash")
-            }
-        }
-        
-    }
-    
-    
-    func sectionLayoutForMovieView() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-                
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            //1.0 is full
-            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(140), heightDimension: .absolute(171))
-            
-            //Group -> Item (1)
-            
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-            
-            
-            let section = NSCollectionLayoutSection(group: group)
-        
-            //section.orthogonalScrollingBehavior = .continuous
-            section.orthogonalScrollingBehavior = .paging
-            //between cells spacing in group
-            section.interGroupSpacing = 10
-            //inset
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 16, trailing: 20)
-            
-            return section
     }
 
 }
-
-extension HomeViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController : UITableViewDataSource, UITableViewDelegate {
     
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let type = items[section]
+//        switch type {
+//        case HomeSection.Trending:
+//            let headerView = tableView.dequeueReusableCell(withIdentifier: CategoryTitleHeaderView.identifier) as?
+//            CategoryTitleHeaderView
+//
+//            headerView?.labelTitle.text = "Trending"
+//            return headerView
+//        case HomeSection.NowPlaying:
+//            let headerView = tableView.dequeueReusableCell(withIdentifier: CategoryTitleHeaderView.identifier) as?
+//            CategoryTitleHeaderView
+//
+//            headerView?.labelTitle.text = "Now Playing"
+//            return headerView
+//
+//        case HomeSection.Upcoming:
+//            let headerView = tableView.dequeueReusableCell(withIdentifier: CategoryTitleHeaderView.identifier) as?
+//            CategoryTitleHeaderView
+//
+//            headerView?.labelTitle.text = "Upcoming"
+//            return headerView
+//
+//        case HomeSection.TopRated:
+//            let headerView = tableView.dequeueReusableCell(withIdentifier: CategoryTitleHeaderView.identifier) as?
+//            CategoryTitleHeaderView
+//
+//            headerView?.labelTitle.text = "Top Rated"
+//            return headerView
+//        default:
+//            return nil
+//        }
+//    }
     
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        let type = items[section]
+//
+//        switch type {
+//        case HomeSection.Trending:
+//            return 25
+//        case HomeSection.NowPlaying:
+//            return 25
+//        case HomeSection.Upcoming:
+//            return 25
+//        case HomeSection.TopRated:
+//            return 25
+//        default:
+//            return 0
+//        }
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
         let type = items[indexPath.section]
-        
         switch type {
-        case .NowPlaying:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            return cell
+            case HomeSection.Trending:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.setTitle(with: "Trending")
+                //cell.labelTitle.text = "Trending"
+                return cell
             
-        case .TopRated:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            return cell
+            case HomeSection.NowPlaying:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.setTitle(with: "Now Playing")
+                //cell.labelTitle.text = "Now Playing"
+                return cell
             
-        case .Trending:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            return cell
+            case HomeSection.Upcoming:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.labelTitle.text = "Upcoming"
+                return cell
             
-        case .Upcoming:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            return cell
+            case HomeSection.TopRated:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.labelTitle.text = "Top Rated"
+                return cell
             
         default:
-            return UICollectionViewCell()
+            return UITableViewCell()
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200.0
     }
     
     
